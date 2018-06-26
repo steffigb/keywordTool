@@ -1,7 +1,19 @@
-<h1>Keyword Management Tool</h1>
+{% extends 'keywords/base.html' %}
 
-<form action = "{% url 'keywords' %}">
-  <input type = "url" placeholder = "http://www.example.com" name = 'url'/>
-  <input type = "submit" value = "Absenden" />
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1 class="title">Keyword Management Tool</h1>
 
-</form>
+    <form action = "{% url 'keywords' %}">
+      <div class="field">
+        <div class="control">
+          <input class="input" type = "url" placeholder = "http://www.example.com" name = 'url'/>
+          <input class="button is-primary" type = "submit" value = "Absenden" />
+        </div>
+      </div>
+    </form>
+
+  </div>
+</section>
+{% endblock %}

@@ -11,10 +11,9 @@ def home(request):
 
 def keywords(request):
     input_url = request.GET['url']
-    ranked_phrases = phrases.get_website_keywords(input_url)
 
-    def pretty(score, kw):
-        return "<p>" + kw + " (" + str(score) + ")</p>"
-
-    nice_phrases = "\n".join([pretty(score, kw) for (score, kw) in ranked_phrases])
-    return HttpResponse(nice_phrases)
+    context = {
+        "phrases": phrases.get_website_keywords(input_url)
+    }
+    template = loader.get_template('keywords/keywords-output.html')
+    return HttpResponse(template.render(context, request))
