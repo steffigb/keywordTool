@@ -3,13 +3,18 @@
 {% block content %}
 <section class="section">
   <div class="container">
-    <h1 class="title">Keyword Management Tool</h1>
 
     <form action = "{% url 'keywords' %}">
       <div class="field">
         <div class="control">
-          <input class="input" type = "url" placeholder = "http://www.example.com" name = 'url'/>
-          <input class="button is-primary" type = "submit" value = "Absenden" />
+          <div class="columns">
+            <div class="column">
+              <input class="input" type = "url" placeholder = "http://www.example.com" name = 'url'/>
+            </div>
+            <div class="column">
+              <input class="button is-primary" type = "submit" value = "Absenden" />
+            </div>
+          </div>
         </div>
       </div>
     </form>
