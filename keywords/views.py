@@ -17,3 +17,8 @@ def keywords(request):
     }
     template = loader.get_template('keywords/keywords-output.html')
     return HttpResponse(template.render(context, request))
+
+def about(request):
+    context = {}
+    template = loader.get_template('keywords/about.html')
+    return HttpResponse(template.render(context, request))
