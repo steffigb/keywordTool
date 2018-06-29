@@ -1,9 +1,7 @@
 {% extends 'keywords/base.html' %}
-
 {% block content %}
 <section class="section">
   <div class="container">
-
     <form action = "{% url 'keywords' %}">
       <div class="field">
         <div class="control">
@@ -18,7 +16,97 @@
         </div>
       </div>
     </form>
-
   </div>
 </section>
+
+<section class="section">
+  <div class="columns">
+    <div class="column">
+      <div class="control">
+        <label class="label">Sprache der Website wählen</label>
+        <label class="radio">
+          <input type="radio" name="language" checked>
+          Deutsch
+        </label>
+        <label class="radio">
+          <input type="radio" name="language">
+          Englisch
+        </label>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="control">
+        <label class="label">Anzahl der Keywords wählen</label>
+        <label class="radio">
+          <input type="radio" name="top">
+          Top 10
+        </label>
+        <label class="radio">
+          <input type="radio" name="top" checked>
+          Top 20
+        </label>
+      </div>
+    </div>
+    <div class="column">
+    </div>
+    <div class="column">
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <p class="control has-icons-left">
+        <label class="label">Phrasenlänge wählen</label>
+        <label class="label has-text-weight-normal">Min</label>
+        <span class="select">
+          <select>
+            <option>1</option>
+            <option selected>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </span>
+      </p>
+    </div>
+
+    <div class="column">
+      <p class="control has-icons-left">
+        <label class="label has-text-white">Phrasenlänge wählen</label>
+        <label class="label has-text-weight-normal">Max</label>
+        <span class="select">
+          <select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option selected>4</option>
+          </select>
+        </span>
+      </p>
+    </div>
+    <div class="column">
+    </div>
+    <div class="column">
+    </div>
+    <div class="column">
+    </div>
+    <div class="column">
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <label class="label">Auszuschließende Begriffe</label>
+      <div class="field">
+        <div class="control">
+          <textarea class="textarea is-primary" type="text" placeholder="Primary textarea"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+    </div>
+  </div>
+  
+</section>
+
 {% endblock %}
