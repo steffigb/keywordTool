@@ -10,7 +10,7 @@
               <input class="input" type = "url" placeholder = "http://www.example.com" name = 'url'/>
             </div>
             <div class="column">
-              <input class="button is-primary" type = "submit" value = "Absenden" />
+              <input class="button is-primary" type = "submit" value = "Submit" />
             </div>
           </div>
         </div>
@@ -23,21 +23,21 @@
   <div class="columns">
     <div class="column">
       <div class="control">
-        <label class="label">Sprache der Website wählen</label>
+        <label class="label">Website language</label>
         <label class="radio">
           <input type="radio" name="language" checked>
-          Deutsch
+          German
         </label>
         <label class="radio">
           <input type="radio" name="language">
-          Englisch
+          English
         </label>
       </div>
     </div>
 
     <div class="column">
       <div class="control">
-        <label class="label">Anzahl der Keywords wählen</label>
+        <label class="label">Number of keywords</label>
         <label class="radio">
           <input type="radio" name="top">
           Top 10
@@ -45,6 +45,10 @@
         <label class="radio">
           <input type="radio" name="top" checked>
           Top 20
+        </label>
+        <label class="radio">
+          <input type="radio" name="top">
+          All
         </label>
       </div>
     </div>
@@ -57,9 +61,9 @@
   <div class="columns">
     <div class="column">
       <p class="control has-icons-left">
-        <label class="label">Phrasenlänge wählen</label>
+        <label class="label">Phrase lenght</label>
         <label class="label has-text-weight-normal">Min</label>
-        <span class="select">
+        <span class="select is-primary">
           <select>
             <option>1</option>
             <option selected>2</option>
@@ -72,9 +76,9 @@
 
     <div class="column">
       <p class="control has-icons-left">
-        <label class="label has-text-white">Phrasenlänge wählen</label>
+        <label class="label has-text-white">Phrase lenght</label>
         <label class="label has-text-weight-normal">Max</label>
-        <span class="select">
+        <span class="select is-primary">
           <select>
             <option>1</option>
             <option>2</option>
@@ -96,7 +100,7 @@
 
   <div class="columns">
     <div class="column">
-      <label class="label">Auszuschließende Begriffe</label>
+      <label class="label">Terms to exclude</label>
       <div class="field">
         <div class="control">
           <textarea class="textarea is-primary" type="text" placeholder="Primary textarea"></textarea>
