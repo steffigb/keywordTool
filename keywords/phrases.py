@@ -3,19 +3,10 @@ from bs4 import BeautifulSoup
 from bs4.element import Comment
 from rake_nltk import Rake
 
-"""
-Füge hier weitere imports hinzu, bspw. BeautifulSoup und Rake.
-
-'pass' bedeutet, dass die Funktion gar nichts macht und dient als Platzhalter
-für deine Implementierung.
-"""
-
 def get_html(url):
     """
     Die Funktion erhält als Parameter eine Url und gibt als Ergebnis (mit
     return) das Html als Text (ein String) zurück.
-
-    Nutze dafür die requests-Bibliothek.
 
     ACHTUNG: Was passiert, wenn es die Website nicht gibt oder es zu einem
     anderen Fehler kommt?
@@ -38,8 +29,6 @@ def get_raw_text(html):
     Dieser wird dann mit Hilfe dieser Funktion 'bereinigt': Sämtliche tags
     sollen entfernt werden, damit am Ende nur noch Text übrig bleibt. Der Text
     wird als String zurückgegeben.
-
-    Nutze dafür die BeautifulSoup-Bibliothek.
     """
     soup = BeautifulSoup(html, 'html.parser')
     texts = soup.findAll(text = True)
@@ -47,18 +36,18 @@ def get_raw_text(html):
 
     return u" ".join(t.strip() for t in visible_texts)
 
-def get_keywords(raw_text):
+def get_keywords(raw_text, language, phraseMinLength, phraseMaxLength):
     """
     Diese Funktion erhält als Eingabe einen Text und gibt als Antwort eine
     Liste von Keywords zurück.
 
-    Dazu verwendet sie die Rake-Bibliothek (da gibt es verschiedene
-    Möglichkeiten; ich würde diese: https://github.com/csurfer/rake-nltk
-    verwenden.)
+    Dazu verwendet sie die Rake-Bibliothek.
     """
     # Uses stopwords for english from NLTK, and all puntuation characters by
     # default
-    r = Rake(min_length = 1, max_length = 2, language="german")
+    r = Rake(min_length = int(phraseMinLength),
+             max_length = int(phraseMaxLength),
+             language=language)
 
     # Extraction given the text.
     r.extract_keywords_from_text(raw_text)
@@ -69,17 +58,22 @@ def get_keywords(raw_text):
     # To get keyword phrases ranked highest to lowest with scores.
     return r.get_ranked_phrases_with_scores()
 
+def get_filtered_keywords(keywords):
+    """
+    TODO: Keywords filtern. Nicht vergessen: Die List der keywords ist so auf-
+          gebaut [(12.0, "keyword1"), (10.2 "keyword2"), ...]
+    """
+    return keywords
 
-def get_website_keywords(url):
+def get_website_keywords(url, language, phraseMinLength, phraseMaxLength):
     """
     Diese Funktion erhält als Eingabe eine Url und gibt als Antwort eine Reihe
     von Keywords zurück. Dazu verwendet sie die weiter oben definierten
     Funktionen. Sie kann dann von anderen Funktionen bspw. in Django aufgerufen
     werden.
-
-    Hier ist nichts mehr zu tun :)
     """
     h = get_html(url)
     t = get_raw_text(h)
-    k = get_keywords(t)
+    k = get_keywords(t, language, phraseMinLength, phraseMaxLength)
+    f = get_filtered_keywords(k)
     return k

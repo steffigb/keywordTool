@@ -10,10 +10,25 @@ def home(request):
     return HttpResponse(template.render(context, request))
 
 def keywords(request):
-    input_url = request.GET['url']
+    request_params = request.POST
+    input_url = request_params['url']
+    language = request_params['language']
+    numberOfKeywords = request_params['top']
+    phraseMinLength = request_params['phraseMinLength']
+    phraseMaxLength = request_params['phraseMaxLength']
+
+    all_phrases = phrases.get_website_keywords(input_url, language,
+                        phraseMinLength, phraseMaxLength)
+
+    top_keywords = []
+    if numberOfKeywords == 'all':
+        top_keywords = all_phrases
+    else:
+        topNumber = int(numberOfKeywords)
+        top_keywords = all_phrases[:topNumber]
 
     context = {
-        "phrases": phrases.get_website_keywords(input_url)
+        "phrases": top_keywords
     }
     template = loader.get_template('keywords/keywords-output.html')
     return HttpResponse(template.render(context, request))
