@@ -23,7 +23,7 @@ Input the website you want to analyze and submit.
 
 ### Options
 
-There are different options to control the keyword ouput:
+There are different options to control the keyword output:
 - Website language: Choose the website's language. It's relevant for the used stopwords list.
 - Number of keywords: Choose the amount of output keywords.
 - Phrase length: Choose the phrase length. There is a minimum phrase length of one and a maximum of four.
