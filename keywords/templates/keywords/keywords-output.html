@@ -5,15 +5,18 @@
   <div class="container">
     <h1 class="title">Keywords</h1>
 
-    <a href='{% url 'csv-export' %}' target="_blank" class="button is-primary" type="submit" value="csv" />
+    <a href='{% url 'csv_export' %}' target="_blank" class="button is-primary" type="submit" value="csv">CSV Export</a>
 
-    {% for phrase in phrases %}
-    <div class="columns">
-      <div class="column is-4">{{ phrase.1 }}</div>
-      <div class="column is-1"></div>
-      <div class="column is-2">{{ phrase.0 }}</div>
-    </div>
-    {% endfor %}
+    <form>
+      {% for phrase in phrases %}
+      <div class="columns">
+        <input type="checkbox" checked="true" name="keep" />
+        <input class="column is-4" value="{{ phrase.1 }}" name="keyword" />
+        <div class="column is-1"></div>
+        <div class="column is-2">{{ phrase.0|floatformat:1 }}</div>
+      </div>
+      {% endfor %}
+    </form>
 
   </div>
 </section>

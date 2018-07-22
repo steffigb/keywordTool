@@ -1,0 +1,3 @@
+"keyword", "score"
+{% for row in data %}"{{ row.1|addslashes }}", "{{ row.0|addslashes }}"
+{% endfor %}
