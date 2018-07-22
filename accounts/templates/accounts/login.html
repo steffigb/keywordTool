@@ -1,0 +1,27 @@
+{% extends 'keywords/base.html' %}
+{% block content %}
+
+<h1>Login</h1>
+
+{% if error %}
+{{ error }}
+{% endif %}
+
+<form method='POST' action='{% url 'login' %}'>
+  {% csrf_token %}
+  Username:
+  <br />
+  <input type='text' name='username' />
+  Password:
+  <br />
+  <input type='password' name='password' />
+  <input type='submit' value='Login'>
+
+  <p>
+    <strong>Noch kein registrierter Nutzer? Dann <a class="has-text-primary"
+    href='{% url 'signup' %}'>HIER</a> klicken!</strong>
+  </p>
+
+</form>
+
+{% endblock %}

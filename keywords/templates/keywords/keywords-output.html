@@ -5,6 +5,8 @@
   <div class="container">
     <h1 class="title">Keywords</h1>
 
+    <a href='{% url 'csv-export' %}' target="_blank" class="button is-primary" type="submit" value="csv" />
+
     {% for phrase in phrases %}
     <div class="columns">
       <div class="column is-4">{{ phrase.1 }}</div>
