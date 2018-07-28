@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
+from django.contrib.auth.decorators import login_required
 
 from . import phrases
+from .models import KeywordsList, Keyword
 
 def home(request):
     context = {}
@@ -55,3 +57,13 @@ def csv_export(request):
 
     response.write(t.render(c))
     return response
+
+@login_required
+def keyword_list_overview(request):
+    my_keyword_lists = KeywordsList.objects.filter(author=request.user)
+
+    context = {
+        "lists": my_keyword_lists
+    }
+    template = loader.get_template('keywords/overview.html')
+    return HttpResponse(template.render(context, request))

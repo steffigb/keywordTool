@@ -11,4 +11,5 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('csv_export', views.csv_export, name='csv_export'),
     path('accounts/', include('accounts.urls')),
+    path('overview', views.keyword_list_overview, name='overview'),
 ]
