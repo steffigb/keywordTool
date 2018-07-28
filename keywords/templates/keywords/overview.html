@@ -13,8 +13,8 @@
             <h3 class="subtitle">Keywords for <a href="{{list.url}}">{{list.url}}</a></h3>
             <p>{{list.description}}</p>
             <br/>
-            <a href="" class="button">Open</a>
-            <a href="" class="button">Delete</a>
+            <a href="{% url 'list' list.id %}" class="button">Open</a>
+            <a href="" class="button is-danger">Delete</a>
           </div>
         {% endfor %}
       </div>
