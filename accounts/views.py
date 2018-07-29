@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
 
 # Create your views here.
 def signup(request):
@@ -23,8 +26,13 @@ def login_view(request):
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
-            return render(request, 'accounts/login.html', {'error':'Login successful'})
+            return HttpResponseRedirect(reverse('overview'))
         else:
             return render(request, 'accounts/login.html', {'error':'Username and Passwords didn\'t match'})
     else:
         return render(request, 'accounts/login.html')
+
+def logout_view(request):
+    # if request.method == 'POST':
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
