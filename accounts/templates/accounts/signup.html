@@ -1,24 +1,67 @@
 {% extends 'keywords/base.html' %}
 {% block content %}
 
-<h1>Sign up</h1>
+<section class='section'>
 
-{% if error %}
-{{ error }}
-{% endif %}
+  <header class='bd-header'>
+    <div class='bd-header-titles'>
+      <h1 class='title'>Sign Up</h1>
+      <p class='subtitle is-4'>
+      </p>
+    </div>
+  </header>
 
-<form method='POST' action='{% url 'signup' %}'>
-  {% csrf_token %}
-  Username:
-  <br />
-  <input type='text' name='username' />
-  Password:
-  <br />
-  <input type='password' name='password1' />
-  Confirm password:
-  <br />
-  <input type='password' name='password2' />
-  <input type='submit' value='Sign up'>
-</form>
+  {% if error %}
+  {{ error }}
+  {% endif %}
+
+  <form method='POST' action='{% url 'signup' %}'>
+    {% csrf_token %}
+    <div class='columns'>
+      <div class='column'>
+        <div class='field'>
+          <label class='label'>Username</label>
+          <div class='control has-icons-left'>
+            <input class='input' type='text' name='username' placeholder='Input a username'>
+            <span class='icon is-small is-left'>
+              <i class='fas fa-user'></i>
+            </span>
+          </div>
+        </div>
+
+        <label class='label'>Password</label>
+        <div class='field'>
+          <p class='control has-icons-left'>
+            <input class='input' type='password' name='password1' placeholder='Input a password'>
+            <span class='icon is-small is-left'>
+              <i class='fas fa-lock'></i>
+            </span>
+          </p>
+        </div>
+
+        <label class='label'>Confirm password</label>
+        <div class='field'>
+          <p class='control has-icons-left'>
+            <input class='input' type='password' name='password2' placeholder='Confirm your password'>
+            <span class='icon is-small is-left'>
+              <i class='fas fa-lock'></i>
+            </span>
+          </p>
+        </div>
+
+        <div class='control is-primary'>
+          <input class='button is-primary' type='submit' value='Sign Up'>
+        </div>
+      </div>
+      <div class='column'>
+      </div>
+      <div class='column'>
+      </div>
+      <div class='column'>
+      </div>
+
+    </div>
+  </form>
+</section>
 
 {% endblock %}

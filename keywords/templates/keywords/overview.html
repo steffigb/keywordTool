@@ -1,25 +1,23 @@
 {% extends 'keywords/base.html' %}
 {% block content %}
 
+
 <section class="section">
   <div class="container">
     <h1 class="title">Your stored keyword lists</h1>
-
-
     <div class="tile is-ancestor">
       <div class="tile is-parent is-vertical">
         {% for list in lists %}
-          <div class="tile is-child notification is-primary">
-            <h3 class="subtitle">Keywords for <a href="{{list.url}}">{{list.url}}</a></h3>
-            <p>{{list.description}}</p>
-            <br/>
-            <a href="{% url 'list' list.id %}" class="button">Open</a>
-            <a href="" class="button is-danger">Delete</a>
-          </div>
+        <div class="tile is-child notification is-primary">
+          <h3 class="subtitle">Keywords for <a href="{{list.url}}">{{list.url}}</a></h3>
+          <p>{{list.description}}</p>
+          <br/>
+          <a href="{% url 'list' list.id %}" class="button">Open</a>
+          <a href="" class="button is-danger">Delete</a>
+        </div>
         {% endfor %}
       </div>
     </div>
-
   </div>
 </section>
 
