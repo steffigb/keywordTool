@@ -5,21 +5,22 @@
   <div class='container'>
     <h1 class='title'>Keywords for <a href='{{ list.url }}'>{{ list.url }}</a></h1>
 
-    {% if login%}
-    <a href='{% url 'csv_export' list.id %}' target='_blank' class='button is-primary' type='submit' value='csv'>CSV Export</a>
-    <a href='' target='_blank' class='button is-success' type='submit' value='csv'>Save</a>
-    <a href='' target='_blank' class='button is-danger' type='submit' value='csv'>Delete</a>
+    <form action = '{% url 'list' list.id %}' method='POST'>
+      {% csrf_token %}
 
-    <br/>  
-    <textarea class='textarea' placeholder='Add a description for this list'></textarea>
-    {% endif %}
-    <br/>
+      {% if login%}
+      <a href='{% url 'csv_export' list.id %}' target='_blank' class='button is-primary' value='csv'>CSV Export</a>
+      <button target='_blank' class='button is-success' type='submit' value='csv'>Save</button>
 
-    <form>
+      <br/>
+      <textarea name="description-{{ list.id }}" class='textarea' placeholder='Add a description for this list'></textarea>
+      {% endif %}
+      <br/>
+
       {% for phrase in phrases %}
       <div class='columns'>
-        <input type='checkbox' checked='true' name='keep' />
-        <input class='column is-4' value='{{ phrase.phrase }}' name='keyword' />
+        <input type='checkbox' checked='true' name='keep-{{ phrase.id }}' />
+        <input class='column is-4' value='{{ phrase.phrase }}' name='keyword-{{ phrase.id }}' />
         <div class='column is-1'></div>
         <div class='column is-2'>{{ phrase.score|floatformat:1 }}</div>
       </div>

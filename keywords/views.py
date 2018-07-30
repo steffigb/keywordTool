@@ -66,13 +66,39 @@ def keyword_list(request, list_id):
     kw_list = get_object_or_404(KeywordsList, pk=list_id)
     keywords = Keyword.objects.filter(kw_list=kw_list)
 
-    context = {
-        "phrases": keywords,
-        "list": kw_list,
-        "login": True
-    }
-    template = loader.get_template('keywords/keywords-output.html')
-    return HttpResponse(template.render(context, request))
+    if request.POST:
+        all_keys = request.POST.keys()
+        keep_keywords = [int(k.replace("keep-", "")) for k in all_keys if "keep-" in k]
+
+        # update list and keywords
+        for k in all_keys:
+            if "description-" in k:
+                kw_list.description = request.POST[k]
+                kw_list.save()
+
+            if "keyword-" in k:
+                keyword_id = int(k.replace("keyword-", ""))
+                change_text = request.POST[k]
+                update_kw = Keyword.objects.get(pk=keyword_id)
+                if update_kw.phrase != change_text:
+                    update_kw.phrase = change_text
+                    update_kw.save()
+
+        # delete keywords
+        for keyword_object in keywords:
+            if not keyword_object.id in keep_keywords:
+                keyword_object.delete()
+
+        return HttpResponseRedirect(reverse('list', args=(list_id,)))
+
+    else:
+        context = {
+            "phrases": keywords,
+            "list": kw_list,
+            "login": True
+        }
+        template = loader.get_template('keywords/keywords-output.html')
+        return HttpResponse(template.render(context, request))
 
 def about(request):
     context = {}

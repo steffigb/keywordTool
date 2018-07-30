@@ -35,7 +35,6 @@ def get_raw_text(html):
 
     return u" ".join(t.strip() for t in visible_texts)
 
-
 def get_keywords(raw_text, language, phraseMinLength, phraseMaxLength):
     """
     Function gets the plain text as input and returns a list of keywords by
@@ -56,12 +55,6 @@ def get_keywords(raw_text, language, phraseMinLength, phraseMaxLength):
 
     return result
 
-def get_filtered_keywords(keywords):
-    """
-    TODO: Filter keywords.
-    """
-    return keywords
-
 def get_website_keywords(url, language, phraseMinLength, phraseMaxLength):
     """
     Functions gets different parameters and returns keywords consindering the
@@ -70,5 +63,4 @@ def get_website_keywords(url, language, phraseMinLength, phraseMaxLength):
     h = get_html(url)
     t = get_raw_text(h)
     k = get_keywords(t, language, phraseMinLength, phraseMaxLength)
-    f = get_filtered_keywords(k)
     return k
