@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.db import transaction
 
 from . import phrases
 from .models import KeywordsList, Keyword
@@ -11,6 +12,16 @@ def home(request):
     context = {}
     template = loader.get_template('keywords/home.html')
     return HttpResponse(template.render(context, request))
+
+@transaction.atomic
+def save_keywords(kw_list, top_keywords):
+    """
+    Database updates were very slow. After some googling I found this solution.
+    https://docs.djangoproject.com/en/dev/topics/db/transactions/#django.db.transaction.atomic
+    """
+    for keyword in top_keywords:
+        kw_obj = Keyword(kw_list=kw_list, phrase=keyword["phrase"], score=keyword["score"])
+        kw_obj.save()
 
 def keywords_create(request):
     request_params = request.POST
@@ -30,16 +41,26 @@ def keywords_create(request):
         topNumber = int(numberOfKeywords)
         top_keywords = all_phrases[:topNumber]
 
-    # create a new KeywordsList
-    kw_list = KeywordsList(description="", url=input_url, author=request.user)
-    kw_list.save()
+    if request.user.is_authenticated:
+        # create a new KeywordsList
+        kw_list = KeywordsList(description="", url=input_url, author=request.user)
+        kw_list.save()
 
-    # add all Keywords to the fresh KeywordsList
-    for keyword in top_keywords:
-        kw_obj = Keyword(kw_list=kw_list, phrase=keyword[1], score=keyword[0])
-        kw_obj.save()
+        # add all Keywords to the fresh KeywordsList
+        save_keywords(kw_list, top_keywords)
 
-    return HttpResponseRedirect(reverse('list', args=(kw_list.id,)))
+        return HttpResponseRedirect(reverse('list', args=(kw_list.id,)))
+    else:
+        context = {
+            "phrases": top_keywords,
+            "list": {
+                "url": input_url,
+                "description": ""
+            },
+            "login": False
+        }
+        template = loader.get_template('keywords/keywords-output.html')
+        return HttpResponse(template.render(context, request))
 
 def keyword_list(request, list_id):
     kw_list = get_object_or_404(KeywordsList, pk=list_id)
@@ -47,7 +68,8 @@ def keyword_list(request, list_id):
 
     context = {
         "phrases": keywords,
-        "list": kw_list
+        "list": kw_list,
+        "login": True
     }
     template = loader.get_template('keywords/keywords-output.html')
     return HttpResponse(template.render(context, request))

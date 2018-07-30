@@ -5,12 +5,14 @@
   <div class='container'>
     <h1 class='title'>Keywords for <a href='{{ list.url }}'>{{ list.url }}</a></h1>
 
+    {% if login%}
     <a href='{% url 'csv_export' list.id %}' target='_blank' class='button is-primary' type='submit' value='csv'>CSV Export</a>
     <a href='' target='_blank' class='button is-success' type='submit' value='csv'>Save</a>
     <a href='' target='_blank' class='button is-danger' type='submit' value='csv'>Delete</a>
 
-    <br/>
+    <br/>  
     <textarea class='textarea' placeholder='Add a description for this list'></textarea>
+    {% endif %}
     <br/>
 
     <form>

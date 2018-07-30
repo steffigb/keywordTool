@@ -49,12 +49,16 @@ def get_keywords(raw_text, language, phraseMinLength, phraseMaxLength):
     r.extract_keywords_from_text(raw_text)
 
     # To get keyword phrases ranked highest to lowest with scores.
-    return r.get_ranked_phrases_with_scores()
+    phrases_with_scores = r.get_ranked_phrases_with_scores()
+    result = []
+    for phrase_tuple in phrases_with_scores:
+        result.append({"score": phrase_tuple[0], "phrase": phrase_tuple[1]})
+
+    return result
 
 def get_filtered_keywords(keywords):
     """
-    TODO: Filter keywords. Don't forget how list of keywords is build:
-          [(12.0, "keyword1"), (10.2 "keyword2"), ...]
+    TODO: Filter keywords.
     """
     return keywords
 
