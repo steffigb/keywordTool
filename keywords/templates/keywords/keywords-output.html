@@ -1,25 +1,25 @@
 {% extends 'keywords/base.html' %}
 
 {% block content %}
-<section class="section">
-  <div class="container">
-    <h1 class="title">Keywords for <a href="{{ list.url }}">{{ list.url }}</a></h1>
+<section class='section'>
+  <div class='container'>
+    <h1 class='title'>Keywords for <a href='{{ list.url }}'>{{ list.url }}</a></h1>
 
-    <a href='{% url 'csv_export' list.id %}' target="_blank" class="button is-primary" type="submit" value="csv">CSV Export</a>
-    <a href='' target="_blank" class="button is-success" type="submit" value="csv">Save</a>
-    <a href='' target="_blank" class="button is-danger" type="submit" value="csv">Delete</a>
+    <a href='{% url 'csv_export' list.id %}' target='_blank' class='button is-primary' type='submit' value='csv'>CSV Export</a>
+    <a href='' target='_blank' class='button is-success' type='submit' value='csv'>Save</a>
+    <a href='' target='_blank' class='button is-danger' type='submit' value='csv'>Delete</a>
 
     <br/>
-    <textarea class="textarea" placeholder="Add a description for this list"></textarea>
+    <textarea class='textarea' placeholder='Add a description for this list'></textarea>
     <br/>
 
     <form>
       {% for phrase in phrases %}
-      <div class="columns">
-        <input type="checkbox" checked="true" name="keep" />
-        <input class="column is-4" value="{{ phrase.phrase }}" name="keyword" />
-        <div class="column is-1"></div>
-        <div class="column is-2">{{ phrase.score|floatformat:1 }}</div>
+      <div class='columns'>
+        <input type='checkbox' checked='true' name='keep' />
+        <input class='column is-4' value='{{ phrase.phrase }}' name='keyword' />
+        <div class='column is-1'></div>
+        <div class='column is-2'>{{ phrase.score|floatformat:1 }}</div>
       </div>
       {% endfor %}
     </form>
