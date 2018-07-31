@@ -4,12 +4,13 @@ from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.db import transaction
+import requests
 
 from . import phrases
 from .models import KeywordsList, Keyword
 
-def home(request):
-    context = {}
+def home(request, error="", url=""):
+    context = {"error": error, "url": url}
     template = loader.get_template('keywords/home.html')
     return HttpResponse(template.render(context, request))
 
@@ -24,6 +25,11 @@ def save_keywords(kw_list, top_keywords):
         kw_obj.save()
 
 def keywords_create(request):
+    # make sure to handle only POST requests in this view
+    if not request.POST:
+        return HttpResponseRedirect(reverse('index'))
+
+    # read in parameters
     request_params = request.POST
     input_url = request_params['url']
     language = request_params['language']
@@ -31,9 +37,19 @@ def keywords_create(request):
     phraseMinLength = request_params['phraseMinLength']
     phraseMaxLength = request_params['phraseMaxLength']
 
+    # make sure URL exists
+    try:
+        request = requests.get(input_url)
+    except:
+        context = {"error": "Website does not exist", "url": input_url}
+        template = loader.get_template('keywords/home.html')
+        return HttpResponse(template.render(context, request))
+
+    # get keywords
     all_phrases = phrases.get_website_keywords(input_url, language,
                         phraseMinLength, phraseMaxLength)
 
+    # take only chosen number of keywords
     top_keywords = []
     if numberOfKeywords == 'all':
         top_keywords = all_phrases
@@ -41,6 +57,7 @@ def keywords_create(request):
         topNumber = int(numberOfKeywords)
         top_keywords = all_phrases[:topNumber]
 
+    # if user is authenticated, store keywords and redirect to keyword_list view
     if request.user.is_authenticated:
         # create a new KeywordsList
         kw_list = KeywordsList(description="", url=input_url, author=request.user)
@@ -50,6 +67,8 @@ def keywords_create(request):
         save_keywords(kw_list, top_keywords)
 
         return HttpResponseRedirect(reverse('list', args=(kw_list.id,)))
+
+    # if user is not authenticated, render keywords directly
     else:
         context = {
             "phrases": top_keywords,

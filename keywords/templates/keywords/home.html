@@ -8,7 +8,8 @@
         <div class='control'>
           <div class='columns'>
             <div class='column'>
-              <input class='input' type='url' placeholder='http://www.example.com' name='url' required/>
+              <input class='input {% if error %}is-danger{% endif %}' value="{{ url }}" type='url' placeholder='http://www.example.com' name='url' required/>
+              {% if error %}<p class="help is-danger">{{ error }}</p>{% endif %}
             </div>
             <div class='column'>
               <input class='button is-primary' type='submit' value='Submit' />
