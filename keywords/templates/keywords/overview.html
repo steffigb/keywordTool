@@ -12,7 +12,7 @@
           <p>{{list.description}}</p>
           <br/>
           <a href='{% url 'list' list.id %}' class='button'>Open</a>
-          <a href='' class='button is-danger'>Delete</a>
+          <a href='{% url 'list_delete' list.id %}' class='button is-danger'>Delete</a>
         </div>
         {% endfor %}
       </div>

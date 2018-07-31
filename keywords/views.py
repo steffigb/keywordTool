@@ -81,6 +81,12 @@ def keywords_create(request):
         template = loader.get_template('keywords/keywords-output.html')
         return HttpResponse(template.render(context, request))
 
+def keyword_list_delete(request, list_id):
+    kw_list = get_object_or_404(KeywordsList, pk=list_id)
+
+    kw_list.delete()
+    return HttpResponseRedirect(reverse('overview'))
+
 def keyword_list(request, list_id):
     kw_list = get_object_or_404(KeywordsList, pk=list_id)
     keywords = Keyword.objects.filter(kw_list=kw_list)
