@@ -3,7 +3,14 @@
 {% block content %}
 <section class='section'>
   <div class='container'>
-    <h1 class='title'>Keywords for <a href='{{ list.url }}'>{{ list.url }}</a></h1>
+    <h1 class='title'>
+      Keywords for
+      {% if "http" in list.url %}
+      <a target="_blank" href='{{list.url}}'>{{list.url}}</a>
+      {% else %}
+      {{list.url}}
+      {% endif %}
+    </h1>
 
     <form action = '{% url 'list' list.id %}' method='POST'>
       {% csrf_token %}
