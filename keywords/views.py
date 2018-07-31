@@ -24,6 +24,13 @@ def save_keywords(kw_list, top_keywords):
         kw_obj = Keyword(kw_list=kw_list, phrase=keyword["phrase"], score=keyword["score"])
         kw_obj.save()
 
+@transaction.atomic
+def save_copied_keywords(new_list, keywords):
+    for merge_keyword in keywords:
+        merge_keyword.pk = None
+        merge_keyword.kw_list = new_list
+        merge_keyword.save()
+
 def keywords_create(request):
     # make sure to handle only POST requests in this view
     if not request.POST:
@@ -85,6 +92,27 @@ def keyword_list_delete(request, list_id):
     kw_list = get_object_or_404(KeywordsList, pk=list_id)
 
     kw_list.delete()
+    return HttpResponseRedirect(reverse('overview'))
+
+def keyword_list_merge(request):
+    if request.POST:
+        all_keys = request.POST.keys()
+        merge_ids = [int(k.replace("list-", "")) for k in all_keys if "list-" in k]
+
+        new_list = KeywordsList(description="", url="Merged List", author=request.user)
+        new_list.save()
+
+        description_list = []
+        for merge_id in merge_ids:
+            merge_list = KeywordsList.objects.get(pk=merge_id)
+            description_list.append(merge_list.url)
+            merge_keywords = Keyword.objects.filter(kw_list=merge_id)
+
+            save_copied_keywords(new_list, merge_keywords)
+
+        new_list.description = " and ".join(description_list)
+        new_list.save()
+
     return HttpResponseRedirect(reverse('overview'))
 
 def keyword_list(request, list_id):

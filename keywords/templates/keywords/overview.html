@@ -4,19 +4,31 @@
 <section class='section'>
   <div class='container'>
     <h1 class='title'>Your stored keyword lists</h1>
-    <div class='tile is-ancestor'>
-      <div class='tile is-parent is-vertical'>
-        {% for list in lists %}
-        <div class='tile is-child notification is-primary'>
-          <h3 class='subtitle'>Keywords for <a href='{{list.url}}'>{{list.url}}</a></h3>
-          <p>{{list.description}}</p>
-          <br/>
-          <a href='{% url 'list' list.id %}' class='button'>Open</a>
-          <a href='{% url 'list_delete' list.id %}' class='button is-danger'>Delete</a>
+    <form method="POST" action="{% url 'list_merge' %}">
+      {% csrf_token %}
+      <button type="submit" class="button">Merge keyword lists</button>
+      <div class='tile is-ancestor'>
+        <div class='tile is-parent is-vertical'>
+          {% for list in lists %}
+          <div class='tile is-child notification is-primary'>
+            <h3 class='subtitle'>
+              Keywords for
+              {% if "http" in list.url %}
+              <a href='{{list.url}}'>{{list.url}}</a>
+              {% else %}
+              {{list.url}}
+              {% endif %}
+            </h3>
+            <input type="checkbox" name="list-{{list.id}}" />
+            <p>{{list.description}}</p>
+            <br/>
+            <a href='{% url 'list' list.id %}' class='button'>Open</a>
+            <a href='{% url 'list_delete' list.id %}' class='button is-danger'>Delete</a>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
-    </div>
+    </form>
   </div>
 </section>
 
