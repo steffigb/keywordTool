@@ -39,7 +39,7 @@ def keywords_create(request):
 
     # make sure URL exists
     try:
-        request = requests.get(input_url)
+        requests.get(input_url)
     except:
         context = {"error": "Website does not exist", "url": input_url}
         template = loader.get_template('keywords/home.html')
