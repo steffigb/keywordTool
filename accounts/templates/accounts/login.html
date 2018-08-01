@@ -10,10 +10,6 @@
     </div>
   </header>
 
-  {% if error %}
-  {{ error }}
-  {% endif %}
-
   <form method='POST' action='{% url 'login' %}'>
     {% csrf_token %}
     <div class='columns'>
@@ -21,7 +17,7 @@
         <div class='field'>
           <label class='label'>Username</label>
           <div class='control has-icons-left'>
-            <input class='input' type='text'name='username' placeholder='Input your username'>
+            <input class='input {% if error %}is-danger{% endif %}' type='text'name='username' placeholder='Input your username'>
             <span class='icon is-small is-left'>
               <i class='fas fa-user'></i>
             </span>
@@ -31,12 +27,16 @@
         <label class='label'>Password</label>
         <div class='field'>
           <p class='control has-icons-left'>
-            <input class='input' type='password' name='password' placeholder='Input your password'>
+            <input class='input {% if error %}is-danger{% endif %}' type='password' name='password' placeholder='Input your password'>
             <span class='icon is-small is-left'>
               <i class='fas fa-lock'></i>
             </span>
           </p>
         </div>
+
+        {% if error %}
+        <p class='help is-danger'>{{ error }}</p>
+        {% endif %}
 
         <div class='control is-primary'>
           <input class='button is-primary' type='submit' value='Log In'>

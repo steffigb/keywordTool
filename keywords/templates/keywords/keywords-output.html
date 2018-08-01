@@ -19,16 +19,19 @@
       <a href='{% url 'csv_export' list.id %}' target='_blank' class='button is-primary' value='csv'>CSV Export</a>
       <button target='_blank' class='button is-success' type='submit' value='csv'>Save</button>
 
-      <br/>
-      <textarea name='description-{{ list.id }}' class='textarea' placeholder='Add a description for this list'></textarea>
+      <div><br/></div>
+
+      <textarea name='description-{{ list.id }}' class='textarea' placeholder='Add a description for this list'>{{ list.description }}</textarea>
       {% endif %}
       <br/>
 
       {% for phrase in phrases %}
-      <div class='columns'>
+      <div class='columns' style="display:flex;align-items:center;">
+        {% if login %}
         <div class='column is-narrow'>
           <input type='checkbox' checked='true' name='keep-{{ phrase.id }}' />
         </div>
+        {% endif %}
         <div class='column is-5'>
           <input class='input is-hovered' value='{{ phrase.phrase }}' name='keyword-{{ phrase.id }}' />
         </div>
