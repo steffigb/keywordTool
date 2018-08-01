@@ -2,28 +2,45 @@
 {% block content %}
 
 <section class='section'>
+  <header class='bd-header'>
+    <div class='bd-header-titles'>
+      <h1 class='title'>Your stored keyword lists</h1>
+    </br>
+    </div>
+  </header>
+
+
   <div class='container'>
-    <h1 class='title'>Your stored keyword lists</h1>
     <form method='POST' action='{% url 'list_merge' %}'>
       {% csrf_token %}
-      <button type='submit' class='button'>Merge keyword lists</button>
+      <button type='submit' class='button button is-primary'>Merge keyword lists</button>
+      <div>
+        </br>
+      </div>
       <div class='tile is-ancestor'>
         <div class='tile is-parent is-vertical'>
           {% for list in lists %}
-          <div class='tile is-child notification is-primary'>
-            <h3 class='subtitle'>
-              Keywords for
-              {% if 'http' in list.url %}
-              <a target='_blank' href='{{list.url}}'>{{list.url}}</a>
-              {% else %}
-              {{list.url}}
-              {% endif %}
-            </h3>
-            <input type='checkbox' name='list-{{list.id}}' />
+          <div
+          <div class='tile is-child notification'>
+            <div class='columns'>
+              <div class='column is-narrow'>
+                <input type='checkbox' name='list-{{list.id}}' />
+              </div>
+              <div class='column'>
+                <h3 class='subtitle'>
+                  Keywords for
+                  {% if 'http' in list.url %}
+                  <a target='_blank' href='{{list.url}}'>{{list.url}}</a>
+                  {% else %}
+                  {{list.url}}
+                  {% endif %}
+                </h3>
+              </div>
+            </div>
             <p>{{list.description}}</p>
             <br/>
-            <a href='{% url 'list' list.id %}' class='button'>Open</a>
-            <a href='{% url 'list_delete' list.id %}' class='button is-danger'>Delete</a>
+            <a href='{% url 'list' list.id %}' class='button is-outlined is-success'>Open</a>
+            <a href='{% url 'list_delete' list.id %}' class='button is-outlined is-danger'>Delete</a>
           </div>
           {% endfor %}
         </div>

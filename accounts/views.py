@@ -28,7 +28,7 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse('overview'))
         else:
-            return render(request, 'accounts/login.html', {'error':'Username and Passwords didn\'t match'})
+            return render(request, 'accounts/login.html', {'error':'Username and Password didn\'t match'})
     else:
         return render(request, 'accounts/login.html')
 
