@@ -18,7 +18,7 @@
   <form method='POST' action='{% url 'signup' %}'>
     {% csrf_token %}
     <div class='columns'>
-      <div class='column'>
+      <div class='column is-narrow'>
         <div class='field'>
           <label class='label'>Username</label>
           <div class='control has-icons-left'>
@@ -52,12 +52,6 @@
         <div class='control is-primary'>
           <input class='button is-primary' type='submit' value='Sign Up'>
         </div>
-      </div>
-      <div class='column'>
-      </div>
-      <div class='column'>
-      </div>
-      <div class='column'>
       </div>
 
     </div>

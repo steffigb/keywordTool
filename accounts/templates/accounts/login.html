@@ -17,7 +17,7 @@
   <form method='POST' action='{% url 'login' %}'>
     {% csrf_token %}
     <div class='columns'>
-      <div class='column'>
+      <div class='column is-narrow'>
         <div class='field'>
           <label class='label'>Username</label>
           <div class='control has-icons-left'>
@@ -46,10 +46,6 @@
           <strong>Don't have an account? <a class='has-text-primary'
             href='{% url 'signup' %}'>Create account</a></strong>
         </p>
-        </div>
-        <div class='column'>
-        </div>
-        <div class='column'>
         </div>
 
       </form>
