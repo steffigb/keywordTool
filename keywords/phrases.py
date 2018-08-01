@@ -33,7 +33,7 @@ def get_raw_text(html):
     texts = soup.findAll(text = True)
     visible_texts = filter(tag_visible, texts)
 
-    return u" ".join(t.strip() for t in visible_texts)
+    return u' '.join(t.strip() for t in visible_texts)
 
 def get_keywords(raw_text, language, phraseMinLength, phraseMaxLength):
     """
@@ -51,7 +51,7 @@ def get_keywords(raw_text, language, phraseMinLength, phraseMaxLength):
     phrases_with_scores = r.get_ranked_phrases_with_scores()
     result = []
     for phrase_tuple in phrases_with_scores:
-        result.append({"score": phrase_tuple[0], "phrase": phrase_tuple[1]})
+        result.append({'score': phrase_tuple[0], 'phrase': phrase_tuple[1]})
 
     return result
 

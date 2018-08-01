@@ -10,7 +10,7 @@ urlpatterns = [
     path('keywords', views.keywords_create, name='keywords'),
     path('<int:list_id>/list/', views.keyword_list, name='list'),
     path('<int:list_id>/list/delete', views.keyword_list_delete, name='list_delete'),
-    path('merge/list', views.keyword_list_merge, name="list_merge"),
+    path('merge/list', views.keyword_list_merge, name='list_merge'),
     path('about', views.about, name='about'),
     path('<int:list_id>/csv_export/', views.csv_export, name='csv_export'),
     path('accounts/', include('accounts.urls')),

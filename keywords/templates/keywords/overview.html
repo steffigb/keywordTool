@@ -4,22 +4,22 @@
 <section class='section'>
   <div class='container'>
     <h1 class='title'>Your stored keyword lists</h1>
-    <form method="POST" action="{% url 'list_merge' %}">
+    <form method='POST' action='{% url 'list_merge' %}'>
       {% csrf_token %}
-      <button type="submit" class="button">Merge keyword lists</button>
+      <button type='submit' class='button'>Merge keyword lists</button>
       <div class='tile is-ancestor'>
         <div class='tile is-parent is-vertical'>
           {% for list in lists %}
           <div class='tile is-child notification is-primary'>
             <h3 class='subtitle'>
               Keywords for
-              {% if "http" in list.url %}
-              <a target="_blank" href='{{list.url}}'>{{list.url}}</a>
+              {% if 'http' in list.url %}
+              <a target='_blank' href='{{list.url}}'>{{list.url}}</a>
               {% else %}
               {{list.url}}
               {% endif %}
             </h3>
-            <input type="checkbox" name="list-{{list.id}}" />
+            <input type='checkbox' name='list-{{list.id}}' />
             <p>{{list.description}}</p>
             <br/>
             <a href='{% url 'list' list.id %}' class='button'>Open</a>

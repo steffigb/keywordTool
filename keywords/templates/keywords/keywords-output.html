@@ -5,22 +5,22 @@
   <div class='container'>
     <h1 class='title'>
       Keywords for
-      {% if "http" in list.url %}
-      <a target="_blank" href='{{list.url}}'>{{list.url}}</a>
+      {% if 'http' in list.url %}
+      <a target='_blank' href='{{list.url}}'>{{list.url}}</a>
       {% else %}
       {{list.url}}
       {% endif %}
     </h1>
 
+    {% if login%}
     <form action = '{% url 'list' list.id %}' method='POST'>
       {% csrf_token %}
 
-      {% if login%}
       <a href='{% url 'csv_export' list.id %}' target='_blank' class='button is-primary' value='csv'>CSV Export</a>
       <button target='_blank' class='button is-success' type='submit' value='csv'>Save</button>
 
       <br/>
-      <textarea name="description-{{ list.id }}" class='textarea' placeholder='Add a description for this list'></textarea>
+      <textarea name='description-{{ list.id }}' class='textarea' placeholder='Add a description for this list'></textarea>
       {% endif %}
       <br/>
 
@@ -32,7 +32,10 @@
         <div class='column is-2'>{{ phrase.score|floatformat:1 }}</div>
       </div>
       {% endfor %}
+
+    {% if login %}
     </form>
+    {% endif %}
 
   </div>
 </section>
