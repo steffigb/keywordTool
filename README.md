@@ -15,6 +15,7 @@ You should have installed a current version (3+) of Python.
 pip install django
 pip install beautifulsoup4
 pip install rake-nltk
+pip install social-auth-app-django # for Google login
 ```
 
 ## HowTo
