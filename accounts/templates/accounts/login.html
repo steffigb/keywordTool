@@ -34,17 +34,25 @@
           </p>
         </div>
 
-        <p><strong>-- OR --</strong></p>
-        <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>  
+        <div class='control is-primary'>
+          <input class='button is-primary' type='submit' value='Log In'>
+        </div>
+        <br />
+
+        <p><strong> OR </strong><br><br></p>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+          {% load static %}
+          <img src="{% static 'img/Google_2015_logo.svg' %}" alt="Google Logo" />
+          <br />
+          Login with Google
+        </a>
+
+        <p><br><br></p>
 
         {% if error %}
         <p class='help is-danger'>{{ error }}</p>
         {% endif %}
 
-        <div class='control is-primary'>
-          <input class='button is-primary' type='submit' value='Log In'>
-        </div>
-        </br>
         <p>
           <strong>Don't have an account? <a class='has-text-primary'
             href='{% url 'signup' %}'>Create account</a></strong>
