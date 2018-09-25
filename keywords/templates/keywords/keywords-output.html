@@ -16,8 +16,8 @@
     <form action = '{% url 'list' list.id %}' method='POST'>
       {% csrf_token %}
 
-      <a href='{% url 'csv_export' list.id %}' target='_blank' class='button is-primary' value='csv'>CSV Export</a>
-      <button target='_blank' class='button is-success' type='submit' value='csv'>Save</button>
+      <a href='{% url 'csv_export' list.id %}' target='_blank' class='button is-primary'>CSV Export</a>
+      <button class='button is-success' type='submit' value='csv'>Save</button>
 
       <div><br/></div>
 
@@ -25,18 +25,36 @@
       {% endif %}
       <br/>
 
+      <div class='columns' style="display:flex;align-items:center;">
+        {% if login %}
+        <div class='column is-1'></div>
+        {% endif %}
+        <div class='column is-5'>
+          Keyword or Phrase
+        </div>
+        <div class='column is-1'>Score</div>
+        <div class='column is-1'>CPC</div>
+        <div class='column is-1'>Comp.</div>
+        <div class='column is-1'></div>
+        <div class='column is-1'></div>
+      </div>
+
       {% for phrase in phrases %}
       <div class='columns' style="display:flex;align-items:center;">
         {% if login %}
-        <div class='column is-narrow'>
+        <div class='column is-1'>
           <input type='checkbox' checked='true' name='keep-{{ phrase.id }}' />
         </div>
         {% endif %}
         <div class='column is-5'>
           <input class='input is-hovered' value='{{ phrase.phrase }}' name='keyword-{{ phrase.id }}' />
         </div>
-        <div class='column is-narrow'></div>
-        <div class='column is-narrow'>{{ phrase.score|floatformat:1 }}</div>
+        <div class='column is-1'>{% if phrase.score < 0.01 %} - {% else %}{{ phrase.score|floatformat:1 }}{% endif %}</div>
+        <div class='column is-1'>{{ phrase.cpc|floatformat:2 }} €</div>
+        <div class='column is-1'>{{ phrase.competition|floatformat:2 }}</div>
+        <div class='column is-1'>
+          <a href='{% url 'related_keywords' phrase.id %}' class='button is-primary'>Related</a>
+        </div>
       </div>
       {% endfor %}
 

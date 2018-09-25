@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.db import transaction
 import requests
 from . import phrases
+from . import grepwords
 from .models import KeywordsList, Keyword
 
 def home(request, error='', url=''):
@@ -21,6 +22,28 @@ def save_keywords(kw_list, top_keywords):
     """
     for keyword in top_keywords:
         kw_obj = Keyword(kw_list=kw_list, phrase=keyword['phrase'], score=keyword['score'])
+        kw_obj.save()
+
+@transaction.atomic
+def save_external_keywords(kw_list, keywords):
+    for keyword in keywords:
+        competition, cpc, cpm = 0, 0, 0
+        try:
+            cpc = float(keyword['cpc'])
+        except:
+            print("Error retrieving key.")
+
+        try:
+            cpm = float(keyword['cmp'])
+        except:
+            print("Error retrieving key.")
+
+        try:
+            competition = float(keyword['competition'])
+        except:
+            print("Error retrieving key.")
+
+        kw_obj = Keyword(kw_list=kw_list, phrase=keyword['keyword'], score=0, cpc=cpc, cpm=cpm, competition=competition)
         kw_obj.save()
 
 @transaction.atomic
@@ -171,6 +194,21 @@ def csv_export(request, list_id):
 
     response.write(t.render(c))
     return response
+
+@login_required
+def related_keywords(request, keyword_id):
+    source = Keyword.objects.get(pk=keyword_id)
+    suggestions = grepwords.related(source.phrase)
+
+    description = "Keyword suggestions, based on '" + source.phrase + "'"
+
+    # create a new KeywordsList
+    kw_list = KeywordsList(description=description, url=source.phrase, author=request.user)
+    kw_list.save()
+
+    save_external_keywords(kw_list, suggestions)
+
+    return HttpResponseRedirect(reverse('list', args=(kw_list.pk,)))
 
 @login_required
 def keyword_list_overview(request):
